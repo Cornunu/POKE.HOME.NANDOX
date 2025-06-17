@@ -1,34 +1,52 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>POKE NANDOX</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1><img src="sr2a947c8f967b8.png" alt="Pokébola" /> POKE NANDOX</h1>
-    <button id="donateBtn">💲</button>
-  </header>
 
-  <main>
-    <section id="pokemon-dia"></section>
-    <button id="pokedexBtn">Acessar Pokédex</button>
-  </main>
-
-  <!-- Overlay de Doação -->
-  <div id="donation-overlay" class="hidden">
-    <div class="donation-modal">
-      <h2>Ajude-nos com uma doação!</h2>
-      <canvas id="qrcode"></canvas>
-      <p class="pix-key">Chave Pix: <span id="pix-key">5a3c5f30-501e-4e72-bd5b-1488f25d7fca</span></p>
-      <button id="moreInfoBtn">📖 Ler mais</button>
-      <p id="moreInfoText" class="hidden">Sua doação ajuda a manter o projeto ativo, adicionar novos recursos e aprimorar a experiência da Pokédex!</p>
-      <button id="closeOverlay">Fechar</button>
-    </div>
+<!-- overlay de login -->
+<div id="login-overlay" class="overlay">
+  <div class="login-box">
+    <h2>👋 Bem-vindo(a)!</h2>
+    <p>Como quer ser chamado?</p>
+    <input type="text" id="username" placeholder="Seu nome" />
+    <button id="loginBtn">Entrar</button>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<header>
+  <h1><img src="sr2a947c8f967b8.png" alt="Pokébola" class="poke-icon shake" /> POKE NANDOX</h1>
+  <button id="donateBtn">💲</button>
+</header>
+
+<main>
+  <section id="pokemon-dia">
+    <!-- Pokémon do dia será carregado aqui -->
+  </section>
+
+  <button id="pokedexBtn">Ir para Pokédex</button>
+</main>
+
+<!-- overlay de doação -->
+<div id="donation-overlay" class="overlay hidden">
+  <div class="donation-modal">
+    <h2>Ajude com uma doação 💖</h2>
+    <canvas id="qrcode"></canvas>
+    <p class="pix-key">Chave Pix: <span id="pix-key"></span></p>
+    <button id="moreInfoBtn">📖 Ler mais</button>
+    <p id="moreInfoText" class="hidden">
+      Sua contribuição ajuda a manter o projeto ativo, adicionar novos recursos na Pokédex e deixar tudo mais rápido e bonito!  
+      Obrigado pelo apoio! 🙏
+    </p>
+    <button id="closeOverlay">Fechar</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
