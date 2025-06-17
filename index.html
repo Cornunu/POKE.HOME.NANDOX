@@ -3,24 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>POKE NANDOX - Home</title>
+  <title>POKE NANDOX</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div class="central-card">
-    <h1>
-      <img src="sr2a947c8f967b8.png" class="poke-icon shake" alt="Pokébola" />
-      POKE NANDOX
-    </h1>
-    
-    <div id="poke-day" class="poke-day">Carregando Pokémon do dia...</div>
-    
-    <button id="gotoPokedex">Ir para Pokédex</button>
+<!-- Tela de Login -->
+<div id="login-overlay" class="overlay">
+  <div class="login-box">
+    <h2>👋 Bem-vindo(a) à Pokédex!</h2>
+    <p>Insira seu nome para continuar:</p>
+    <input type="text" id="username" placeholder="Seu nome" />
+    <button onclick="saveUsername()">Entrar</button>
+  </div>
+</div>
+
+<header>
+  <h1>
+    <img src="sr2a947c8f967b8.png" alt="Pokébola" class="poke-icon shake" />
+    POKE NANDOX
+  </h1>
+  <p id="user-welcome"></p>
+</header>
+
+<main>
+  <div class="pokemon-dia" id="pokemon-dia">
+    <h2>Pokémon do Dia</h2>
+    <div id="pokemon-info"></div>
+    <button onclick="location.href='https://cornunu.github.io/POKE-DOX/'">Ir para a Pokédex</button>
   </div>
 
-  <div id="alerta-central" class="alerta-central"></div>
+  <div class="ajude-nos">
+    <h3>Ajude-nos 💖</h3>
+    <p>Escaneie o QR Code ou copie a chave Pix abaixo:</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=5a3c5f30-501e-4e72-bd5b-1488f25d7fca" alt="QR Code Pix" />
+    <p class="pix-chave">5a3c5f30-501e-4e72-bd5b-1488f25d7fca</p>
+    <button id="donate-btn">💲</button>
 
-  <script src="home.js"></script>
+    <div id="donate-menu" class="hidden">
+      <h4>🏆 Maiores Doadores</h4>
+      <ul id="donator-list"></ul>
+    </div>
+  </div>
+</main>
+
+<script src="script.js"></script>
 </body>
 </html>
