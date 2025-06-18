@@ -15,7 +15,6 @@
       <img src="sr2a947c8f967b8.png" class="poke-icon shake" alt="Pokébola" />
       POKE NANDOX
     </h1>
-    <button id="donateBtn">💲</button>
   </header>
 
   <!-- Pokémon do Dia -->
@@ -25,24 +24,33 @@
     <button onclick="window.location.href='https://cornunu.github.io/POKE-DOX/'">Ir para a Pokédex</button>
   </section>
 
-  <!-- Modal de Doação -->
-  <div id="donateModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeDonate">&times;</span>
-      <h2>Ajude o projeto!</h2>
-      <div id="qrcode"></div>
-      <p id="pixKey">Chave Pix: <strong>5a3c5f30-501e-4e72-bd5b-1488f25d7fca</strong></p>
-      <details>
-        <summary>Ler mais</summary>
-        <p>As doações ajudam a manter o projeto no ar e trazem novas funcionalidades incríveis. Obrigado pelo apoio!</p>
-      </details>
-      <div id="placar" style="margin-top: 10px;"></div>
-    </div>
-  </div>
+  <script>
+    // Gera um Pokémon aleatório por dia (fixo durante 24h)
+    function getDailyPokemonId() {
+      const now = new Date();
+      const seed = now.getFullYear() * 1000 + now.getMonth() * 100 + now.getDate();
+      const randomId = (seed % 898) + 1; // Total de Pokémon até Geração 8
+      return randomId;
+    }
 
-  <!-- ID do usuário no canto inferior -->
-  <div id="userIdBox" class="user-id">ID: carregando...</div>
+    async function loadPokemonOfTheDay() {
+      const pokeId = getDailyPokemonId();
+      try {
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokeId}`);
+        const data = await res.json();
 
-  <script src="script.js"></script>
+        const pokeBox = document.getElementById('pokeDayBox');
+        pokeBox.innerHTML = `
+          <h3>#${data.id} - ${data.name.toUpperCase()}</h3>
+          <img src="${data.sprites.other['official-artwork'].front_default}" alt="${data.name}" style="width: 180px;" />
+          <p>Tipo(s): ${data.types.map(t => t.type.name).join(', ')}</p>
+        `;
+      } catch (e) {
+        document.getElementById('pokeDayBox').textContent = 'Erro ao carregar o Pokémon!';
+      }
+    }
+
+    loadPokemonOfTheDay();
+  </script>
 </body>
 </html>
