@@ -1,33 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // === LOGIN ===
-  const overlay = document.getElementById("loginOverlay");
-  const enterBtn = document.getElementById("enterBtn");
-  const userNameInput = document.getElementById("userNameInput");
-
-  const savedName = localStorage.getItem("userName");
-  if (savedName) {
-    overlay.style.display = "none";
-    showWelcome(savedName);
-    loadPokemonOfTheDay();
+  // === GERAÇÃO DE ID FIXO POR USUÁRIO ===
+  let userId = localStorage.getItem("userId");
+  if (!userId) {
+    userId = "user-" + Math.random().toString(36).substr(2, 8);
+    localStorage.setItem("userId", userId);
   }
 
-  enterBtn.addEventListener("click", () => {
-    const name = userNameInput.value.trim();
-    if (name) {
-      localStorage.setItem("userName", name);
-      overlay.style.display = "none";
-      showWelcome(name);
-      loadPokemonOfTheDay();
-    }
-  });
-
-  function showWelcome(name) {
-    const alerta = document.createElement("div");
-    alerta.className = "alerta-central";
-    alerta.textContent = `Bem-vindo(a), ${name}!`;
-    document.body.appendChild(alerta);
-    setTimeout(() => alerta.remove(), 3000);
-  }
+  const idDisplay = document.createElement("div");
+  idDisplay.className = "user-id";
+  idDisplay.textContent = `Seu ID: ${userId}`;
+  document.body.appendChild(idDisplay);
 
   // === POKÉMON DO DIA ===
   function loadPokemonOfTheDay() {
@@ -66,6 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
+  loadPokemonOfTheDay();
+
   // === DOAÇÃO (MODAL) ===
   const donateBtn = document.getElementById("donateBtn");
   const donateModal = document.getElementById("donateModal");
@@ -88,6 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
       width: 128,
       height: 128,
     });
+
+    // Exibe ID no placar (simulação de doação identificada)
+    const placar = document.getElementById("placar");
+    placar.innerHTML = `<strong>${userId} = 💰</strong> (aguardando valor...)`;
   }
 
   // Fecha o modal se clicar fora
