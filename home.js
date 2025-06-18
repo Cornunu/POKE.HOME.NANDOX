@@ -1,87 +1,88 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // === GERAÇÃO DE ID FIXO POR USUÁRIO ===
-  let userId = localStorage.getItem("userId");
-  if (!userId) {
-    userId = "user-" + Math.random().toString(36).substr(2, 8);
-    localStorage.setItem("userId", userId);
+// Dados básicos para teste
+const pokemonData = {
+  1: {
+    name: "Bulbasaur",
+    type: ["Grass", "Poison"],
+    evolutions: ["Ivysaur", "Venusaur"],
+    description: "A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.",
+    region: "Kanto",
+    generation: 1,
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+  },
+  2: {
+    name: "Ivysaur",
+    type: ["Grass", "Poison"],
+    evolutions: ["Venusaur"],
+    description: "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.",
+    region: "Kanto",
+    generation: 1,
+    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"
   }
+};
 
-  const idDisplay = document.createElement("div");
-  idDisplay.className = "user-id";
-  idDisplay.textContent = `Seu ID: ${userId}`;
-  document.body.appendChild(idDisplay);
+// Mostrar Pokémon do Dia
+function getPokemonOfDay() {
+  const keys = Object.keys(pokemonData);
+  const index = new Date().getDate() % keys.length;
+  return pokemonData[keys[index]];
+}
 
-  // === POKÉMON DO DIA ===
-  function loadPokemonOfTheDay() {
-    const stored = JSON.parse(localStorage.getItem("pokeDay")) || {};
-    const now = Date.now();
-    const oneDay = 24 * 60 * 60 * 1000;
+function showPokemonOfDay() {
+  const poke = getPokemonOfDay();
+  const box = document.getElementById("pokeDayBox");
+  box.innerHTML = `
+    <h3>${poke.name}</h3>
+    <img src="${poke.img}" alt="${poke.name}" />
+    <p>${poke.description}</p>
+  `;
+}
 
-    if (stored.timestamp && now - stored.timestamp < oneDay) {
-      renderPokeDay(stored.data);
-    } else {
-      const id = Math.floor(Math.random() * 898) + 1;
-      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-        .then(res => res.json())
-        .then(data => {
-          const pokeData = {
-            name: data.name.toUpperCase(),
-            image: data.sprites.other['official-artwork'].front_default,
-          };
-          localStorage.setItem("pokeDay", JSON.stringify({
-            timestamp: now,
-            data: pokeData
-          }));
-          renderPokeDay(pokeData);
-        })
-        .catch(err => {
-          document.getElementById("pokeDayBox").textContent = "Erro ao carregar.";
-        });
-    }
-  }
-
-  function renderPokeDay(poke) {
-    const box = document.getElementById("pokeDayBox");
-    box.innerHTML = `
-      <h3>${poke.name}</h3>
-      <img src="${poke.image}" alt="${poke.name}" />
+// Montar grid
+function renderAllPokemons() {
+  const grid = document.getElementById("pokemonGrid");
+  grid.innerHTML = "";
+  Object.entries(pokemonData).forEach(([id, poke]) => {
+    const tile = document.createElement("div");
+    tile.className = "pokemon-tile";
+    tile.innerHTML = `
+      <img src="${poke.img}" alt="${poke.name}" />
+      <p>#${id.padStart?.(3, "0") || id} - ${poke.name}</p>
     `;
-  }
-
-  loadPokemonOfTheDay();
-
-  // === DOAÇÃO (MODAL) ===
-  const donateBtn = document.getElementById("donateBtn");
-  const donateModal = document.getElementById("donateModal");
-  const closeDonate = document.getElementById("closeDonate");
-
-  donateBtn.addEventListener("click", () => {
-    donateModal.style.display = "block";
-    generateQRCode();
+    tile.onclick = () => showDetails(id);
+    grid.appendChild(tile);
   });
+}
 
-  closeDonate.addEventListener("click", () => {
-    donateModal.style.display = "none";
-  });
+// Mostrar detalhes
+function showDetails(id) {
+  const poke = pokemonData[id];
+  const section = document.getElementById("pokemonDetails");
+  section.style.display = "block";
+  section.innerHTML = `
+    <h2>${poke.name}</h2>
+    <img src="${poke.img}" />
+    <p><strong>Tipos:</strong> ${poke.type.join(", ")}</p>
+    <p><strong>Evoluções:</strong> ${poke.evolutions.join(" ➝ ")}</p>
+    <p><strong>Descrição:</strong> ${poke.description}</p>
+    <p><strong>Região:</strong> ${poke.region}</p>
+    <p><strong>Geração:</strong> ${poke.generation}</p>
+  `;
 
-  function generateQRCode() {
-    const qrContainer = document.getElementById("qrcode");
-    qrContainer.innerHTML = "";
-    new QRCode(qrContainer, {
-      text: "5a3c5f30-501e-4e72-bd5b-1488f25d7fca",
-      width: 128,
-      height: 128,
-    });
+  // Esconder lista principal
+  document.getElementById("pokedex").style.display = "none";
+}
 
-    // Exibe ID no placar (simulação de doação identificada)
-    const placar = document.getElementById("placar");
-    placar.innerHTML = `<strong>${userId} = 💰</strong> (aguardando valor...)`;
-  }
+// Pesquisar
+document.addEventListener("DOMContentLoaded", () => {
+  showPokemonOfDay();
+  renderAllPokemons();
 
-  // Fecha o modal se clicar fora
-  window.addEventListener("click", (e) => {
-    if (e.target == donateModal) {
-      donateModal.style.display = "none";
-    }
+  const searchInput = document.getElementById("searchInput");
+  searchInput.addEventListener("input", () => {
+    const val = searchInput.value.toLowerCase();
+    const entry = Object.entries(pokemonData).find(
+      ([, poke]) => poke.name.toLowerCase() === val
+    );
+    if (entry) showDetails(entry[0]);
   });
 });
