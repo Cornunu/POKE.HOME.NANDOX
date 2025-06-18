@@ -128,3 +128,14 @@ button:hover {
   cursor: pointer;
   color: white;
 }
+.user-id {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(20, 20, 20, 0.85);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  z-index: 999;
+}
