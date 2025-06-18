@@ -21,13 +21,16 @@
     <button id="goToDex">Ir para a Pokédex</button>
   </section>
 
-  <!-- Notificação -->
-  <div id="welcomeMessage" class="welcome-popup" style="display: none;">
-    <img src="sr2a947c8f967b8.png" alt="Pokébola" style="width: 30px; vertical-align: middle; margin-right: 10px;">
-    <span>Bem-vindo(a) à Pokédex!</span>
+  <!-- POPUP de Boas-vindas -->
+  <div id="welcomePopup" class="popup">
+    <div class="popup-content">
+      <img src="sr2a947c8f967b8.png" alt="Pokébola" class="popup-icon" />
+      <h2>🎉 Bem-vindo(a) à Pokédex!</h2>
+    </div>
   </div>
 
   <audio id="welcomeSound" src="WELCOME.ogg" preload="auto"></audio>
+
   <script>
     // Pokémon do Dia
     async function getPokemonOfTheDay() {
@@ -45,15 +48,17 @@
     }
     getPokemonOfTheDay();
 
-    // Botão "Ir para a Pokédex"
+    // Ao clicar no botão, toca o som, mostra o pop-up e redireciona
     document.getElementById('goToDex').addEventListener('click', () => {
+      const popup = document.getElementById('welcomePopup');
       const audio = document.getElementById('welcomeSound');
-      const popup = document.getElementById('welcomeMessage');
+
       popup.style.display = 'flex';
       audio.play();
+
       setTimeout(() => {
-        window.location.href = "https://cornunu.github.io/POKE-DOX/";
-      }, 1000); // espera 1 segundo após o som
+        window.location.href = 'https://cornunu.github.io/POKE-DOX/';
+      }, 1000); // 1 segundo depois
     });
   </script>
 </body>
