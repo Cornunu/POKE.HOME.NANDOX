@@ -3,6 +3,14 @@
 Bem-vindo à **POKE NandoX**, uma Pokédex online feita com carinho por NandoX
 com Extras!
 
+
+
+## Próxima atualização
+
+Próxima atualização prevista para 15 de julho de 2025.
+
+
+
 ## 💡 Funcionalidades
 
 - 📸 Imagens oficiais dos Pokémon
