@@ -8,7 +8,7 @@ com Extras!
 - 📸 Imagens oficiais dos Pokémon
 - 🔎 Busca com notificações visuais
 - 🎉 Pokémon aleatório do dia (pode conter bugs)
-- 💬 Avisos estilosos e mensagens especiais
+- 💬 Avisos e mensagens especiais
 - ⚙️ Interface responsiva
 
 ## 🖼️ Imagens de preview↓
