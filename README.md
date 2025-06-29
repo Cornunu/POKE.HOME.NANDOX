@@ -1,4 +1,4 @@
-# 🧿 POKE NandoX
+#  POKE NandoX
 
 Bem-vindo à **POKE NandoX**, uma Pokédex online feita com carinho por NandoX
 com Extras!
